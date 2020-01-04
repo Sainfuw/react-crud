@@ -1,25 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import axios from 'axios'
 
-function App() {
+import Header from './components/Header'
+import Productos from './components/Productos/Productos'
+import Producto from './components/Productos/Producto'
+import AgregarProducto from './components/Productos/AgregarProducto'
+import EditarProducto from './components/Productos/EditarProducto';
+
+const App = () => {
+  const [ productos, setProductos ] = useState([])
+  const [ updateProductos, setUpdate ] = useState(true)
+
+  const consultarApi = async () => {
+    const result = await axios.get("http://192.168.1.94:3001/api/products")
+    setProductos(result.data)
+    setUpdate(false)
+  }
+
+  const getProduct = (id) => {
+    return productos.filter((p) => p.id === parseInt(id))[0]
+  }
+
+  useEffect(() => {
+    if (updateProductos) {
+      consultarApi()
+    }
+  }, [updateProductos])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <main className="container mt-5">
+        <Switch>
+          <Route exact path="/productos/nuevo" render={() => <AgregarProducto getProduct={getProduct} setUpdate={setUpdate} />} />
+          <Route exact path="/productos/:id/editar" render={() => <EditarProducto getProduct={getProduct} setUpdate={setUpdate} />} />
+          <Route exact path="/productos/:id" render={() => <Producto getProduct={getProduct} />} />
+          <Route exact path="/productos"  render={() => <Productos productos={productos} setUpdate={setUpdate} />} />
+          <Route exact path="/"  render={() => <Productos productos={productos} setUpdate={setUpdate} />} />
+        </Switch>
+      </main>
+      <p className="mt-4 p2 text-center">Todos los derechos Reservados</p>
+    </Router>
   );
 }
 

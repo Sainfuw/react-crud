@@ -39,15 +39,15 @@ const eliminarProducto = (id, setUpdate) => {
   })
 }
 
-const ProductoLista = ({ producto, setUpdate }) => {
+const ProductoLista = ({ product, setUpdate }) => {
   return (
     <tr>
-      <td>{producto.name}</td>
-      <td>{producto.price}</td>
-      <td>{producto.amount}</td>
+      <td>{product.name}</td>
+      <td>{product.price}</td>
+      <td>{product.amount}</td>
       <td className="text-right">
-        <Link to={`/productos/${producto.id}`} className="btn btn-primary mr-2">Detalle &oplus;</Link>
-        <button type="button" onClick={() => eliminarProducto(producto.id, setUpdate)} className="btn btn-warning">Eliminar &otimes;</button>
+        <Link to={`/productos/${product.id}`} className="btn btn-primary mr-2">Detalle &oplus;</Link>
+        <button type="button" onClick={() => eliminarProducto(product.id, setUpdate)} className="btn btn-warning">Eliminar &otimes;</button>
       </td>
     </tr>
   )

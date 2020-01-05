@@ -1,7 +1,20 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import ProductoLista from './ProductoLista'
 
-const Productos = ({ productos, setUpdate }) => {
+// Redux
+import { useSelector, useDispatch } from 'react-redux'
+import { showProducts } from '../../actions/productsActions'
+
+const Productos = () => {
+  const [ update, setUpdate ] = useState(true)
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.products.products)
+
+  useEffect(() => {
+    dispatch(showProducts())
+    setUpdate(false)
+  }, [dispatch, update])
+
   return (
     <Fragment>
       <h1 className="text-center">Productos</h1>
@@ -16,7 +29,7 @@ const Productos = ({ productos, setUpdate }) => {
         </thead>
         <tbody>
           {
-            productos.map(producto => <ProductoLista key={producto.id} producto={producto} setUpdate={setUpdate} />)
+            products.map(product => <ProductoLista key={product.id} product={product} />)
           }
         </tbody>
       </table>

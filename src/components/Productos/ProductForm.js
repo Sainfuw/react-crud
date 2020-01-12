@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 
+// Redux
+import { useDispatch } from 'react-redux'
+import { updateProduct, addProduct } from '../../actions/productsActions'
+
+// Custom
 import Error from '../Error'
 
-const ProductForm = ({setUpdate, getProduct}) => {
+const ProductForm = ({checkProduct}) => {
   const history = useHistory()
+  const dispatch = useDispatch()
   const { id } = useParams()
   const [ error, setError ] = useState(false)
-  const checkProduct = getProduct(id)
   let product = checkProduct ? checkProduct : { name: '', price: '', amount: '', category: '0' }
 
   useEffect(() => {
@@ -31,21 +34,13 @@ const ProductForm = ({setUpdate, getProduct}) => {
 
     try {
       if (id) {
-        const result = await axios.put(`http://192.168.1.94:3001/api/products/${product.id}`, product)
-        if (result.status === 200) {
-          Swal.fire('Producto Actualizado', 'El producto se ha actualizado correctamente.', 'success')
-        }
+        dispatch(updateProduct(product))
       } else {
-        const result = await axios.post(`http://192.168.1.94:3001/api/products`, product)
-        if (result.status === 201) {
-          Swal.fire('Producto Creado', 'El producto se ha creado correctamente.', 'success')
-        }
+        dispatch(addProduct(product))
       }
     } catch (error) {
       console.log(error)
     }
-
-    setUpdate(true)
     history.push('/productos')
   }
 

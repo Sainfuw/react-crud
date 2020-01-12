@@ -8,9 +8,9 @@ import store from './store'
 // Components
 import Header from './components/Header'
 import Productos from './components/Productos/Productos'
-// import Producto from './components/Productos/Producto'
-// import AgregarProducto from './components/Productos/AgregarProducto'
-// import EditarProducto from './components/Productos/EditarProducto';
+import Producto from './components/Productos/Producto'
+import EditarProducto from './components/Productos/EditarProducto';
+import AgregarProducto from './components/Productos/AgregarProducto'
 
 const App = () => {
   return (
@@ -19,10 +19,10 @@ const App = () => {
         <Header />
         <main className="container mt-5">
           <Switch>
-            {/* <Route exact path="/productos/nuevo" render={() => <AgregarProducto getProduct={getProduct} setUpdate={setUpdate} />} />
-            <Route exact path="/productos/:id/editar" render={() => <EditarProducto getProduct={getProduct} setUpdate={setUpdate} />} />
-            <Route exact path="/productos/:id" render={() => <Producto getProduct={getProduct} />} />
-            <Route exact path="/productos"  render={() => <Productos productos={productos} setUpdate={setUpdate} />} /> */}
+            <Route exact path="/productos/nuevo" component={AgregarProducto} />
+            <Route exact path="/productos/:id/editar" component={EditarProducto} />
+            <Route exact path="/productos/:id" component={Producto} />
+            <Route exact path="/productos" component={Productos} />
             <Route exact path="/" component={Productos} />
           </Switch>
         </main>

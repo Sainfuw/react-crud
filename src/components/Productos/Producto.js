@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useParams } from 'react-router'
 
-const MostrarProducto = ({ getProduct }) => {
+// Redux
+import { useSelector, useDispatch } from 'react-redux'
+import { showProduct } from '../../actions/productsActions'
+
+const MostrarProducto = () => {
   const { id } = useParams()
-  const producto = getProduct(id) 
+  const dispatch = useDispatch()
+  const product = useSelector(state => state.products.product)
+
+  useEffect(() => {
+    dispatch(showProduct(id))
+  }, [dispatch, id])
 
   return (
     <div className="jumbotron">
@@ -14,19 +23,19 @@ const MostrarProducto = ({ getProduct }) => {
           <tbody>
             <tr>
               <th width="20%">Nombre</th>
-              <td width="50%">{ producto ? producto.name : null }</td>
+              <td width="50%">{ product ? product.name : null }</td>
             </tr>
             <tr>
               <th>Precio</th>
-              <td>{ producto ? producto.price : null }</td>
+              <td>{ product ? product.price : null }</td>
             </tr>
             <tr>
               <th>Cantidad</th>
-              <td>{ producto ? producto.amount : null }</td>
+              <td>{ product ? product.amount : null }</td>
             </tr>
             <tr>
               <th>Categoría</th>
-              <td>{ producto ? producto.category : null }</td>
+              <td>{ product ? product.category : null }</td>
             </tr>
           </tbody>
         </table>

@@ -1,19 +1,36 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import ProductoLista from './ProductoLista'
+import Swal from 'sweetalert2'
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux'
-import { showProducts } from '../../actions/productsActions'
+import { showProducts, removeStatus } from '../../actions/productsActions'
 
 const Productos = () => {
-  const [ update, setUpdate ] = useState(true)
   const dispatch = useDispatch()
   const products = useSelector(state => state.products.products)
+  const status = useSelector(state => state.products.status)
 
   useEffect(() => {
     dispatch(showProducts())
-    setUpdate(false)
-  }, [dispatch, update])
+  }, [dispatch])
+
+  useEffect(() => {
+    if (status === 200) {
+      Swal.fire('Producto Actualizado', 'El producto se ha actualizado correctamente.', 'success')
+    }
+    if (status === 201) {
+      Swal.fire('Producto Creado', 'El producto se ha creado correctamente.', 'success')
+    }
+    if (status === 204) {
+      Swal.fire(
+        'Producto Eliminado!',
+        'El producto se ha eliminado del listado',
+        'success'
+      )
+    }
+    dispatch(removeStatus())
+  }, [dispatch, status])
 
   return (
     <Fragment>

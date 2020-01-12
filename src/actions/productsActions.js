@@ -34,10 +34,11 @@ export const updateProduct = payload => async dispatch =>  {
 }
 
 export const deleteProduct = payload => async dispatch =>  {
-  const result = await axios.delete(`http://192.168.1.94:3001/api/products/${payload.id}`)
+  const result = await axios.delete(`http://192.168.1.94:3001/api/products/${payload}`)
+  debugger
   dispatch({
     type: DELETE_PRODUCT,
-    payload: { status: result.status, product: payload }
+    payload: { status: result.status, id: payload }
   })
 }
 

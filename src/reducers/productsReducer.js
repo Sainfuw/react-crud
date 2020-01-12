@@ -33,7 +33,7 @@ const productsReducer = (state = initialState, action) => {
     case DELETE_PRODUCT:
       return {
         ...state,
-        products: state.products.filter(product => product.id !== action.payload.product.id),
+        products: state.products.filter(product => product.id !== action.payload.id),
         status: action.payload.status
       }
     case REMOVE_STATUS:

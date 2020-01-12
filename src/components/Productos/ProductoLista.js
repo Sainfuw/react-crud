@@ -9,7 +9,7 @@ import { deleteProduct } from '../../actions/productsActions'
 const ProductoLista = ({ product }) => {
   const dispatch = useDispatch()
 
-  const eliminarProducto = (product) => {
+  const eliminarProducto = (id) => {
     Swal.fire({
       title: '¿Estas Seguro?',
       text: 'Un producto eliminado no se puede recuperar!',
@@ -19,7 +19,7 @@ const ProductoLista = ({ product }) => {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Si, eliminar',
       cancelButtonText: 'Cancelar'
-    }).then(result => result.value ? dispatch(deleteProduct(product)) : null)
+    }).then(result => result.value ? dispatch(deleteProduct(id)) : null)
   }
 
   return (
@@ -29,7 +29,7 @@ const ProductoLista = ({ product }) => {
       <td>{product.amount}</td>
       <td className="text-right">
         <Link to={`/productos/${product.id}`} className="btn btn-primary mr-2">Detalle &oplus;</Link>
-        <button type="button" onClick={() => eliminarProducto(product)} className="btn btn-warning">Eliminar &times;</button>
+        <button type="button" onClick={() => eliminarProducto(product.id)} className="btn btn-warning">Eliminar &times;</button>
       </td>
     </tr>
   )

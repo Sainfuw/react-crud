@@ -21,7 +21,7 @@ export const addProduct = payload => async dispatch => {
   const result = await axios.post(`http://192.168.1.94:3001/api/products`, payload)
   dispatch({
     type: ADD_PRODUCT,
-    payload: result
+    payload: { data: result.data, status: result.status }
   })
 }
 
@@ -29,7 +29,7 @@ export const updateProduct = payload => async dispatch =>  {
   const result = await axios.put(`http://192.168.1.94:3001/api/products/${payload.id}`, payload)
   dispatch({
     type: UPDATE_PRODUCT,
-    payload: result
+    payload: { data: result.data, status: result.status }
   })
 }
 
